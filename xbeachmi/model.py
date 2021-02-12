@@ -11,7 +11,7 @@ from mako.template import Template
 from bmi.wrapper import BMIWrapper
 from bmi.api import IBmi
 from multiprocessing import Process, Queue, JoinableQueue
-from queue import Empty, Full
+from Queue import Empty, Full
 
 import xbeachmi.progress
 import xbeachmi.netcdf
@@ -623,7 +623,7 @@ class XBeachMI(IBmi):
     
     def set_var(self, var, val):
         if var == 'instance':
-            self.set_instance(str(val))
+            self.set_instances(str(val))
         else:
             self._call('set_var', (var, val))
         
