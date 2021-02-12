@@ -390,13 +390,13 @@ class XBeachMI(IBmi):
         '''
 
         self.aggregate_data()
-        
-        for instance in instances:
-            if instance in self.instances.keys():
-                self.sync_time(instance)
-                self.exchange_data(instance)
-            else:
-                raise ValueError('Invalid instance [%s]' % instance)
+        instance = instances   #instances is only 1 string: {str} 'stat' > therefore cannot iterate over this, temp removed
+        # for instance in instances:
+        if instance in self.instances.keys():
+            self.sync_time(instance)
+            self.exchange_data(instance)
+        else:
+            raise ValueError('Invalid instance [%s]' % instance)
 
         self.running = instances
             
