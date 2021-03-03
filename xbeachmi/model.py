@@ -651,7 +651,7 @@ class XBeachMI(IBmi):
         self.start()
             
             
-    def update(self, dt=-1):
+    def update(self, dt=-1, instances=None):
         '''Update running instances and time
 
         All instances take one time step. Afterwards it is checked
@@ -665,8 +665,14 @@ class XBeachMI(IBmi):
             Time step
 
         '''
-        
+
         self.update_instances()
+
+        if not instances:
+            instances = self.running
+
+        if type(instances) is not list:
+            instances = [instances]
 
         try:
             t = self._call('get_current_time')
@@ -676,11 +682,12 @@ class XBeachMI(IBmi):
             if dt > 0.:
                 target = t + dt
             else:
+                 #TL: try like this, got error because function started to loop over individual characters 's''t''a''t' of self.running = u'stat'   (having just 1 instance)
                 target = max([self._call('get_current_time', instances=[instance])
-                              for instance in self.running])
+                          for instance in instances])
 
             # make sure all instances keep up with the front runner
-            for instance in self.running:
+            for instance in instances:
                 while True:
                     t = self._call('get_current_time', instances=[instance])
 
